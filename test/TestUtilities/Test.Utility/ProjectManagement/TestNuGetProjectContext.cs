@@ -15,6 +15,7 @@ namespace Test.Utility
 {
     public class TestNuGetProjectContext : IMSBuildNuGetProjectContext
     {
+        private KeyValuePair<string, Guid> _operationId;
         public TestExecutionContext TestExecutionContext { get; set; }
 
         public void Log(MessageLevel level, string message, params object[] args)
@@ -53,7 +54,21 @@ namespace Test.Utility
 
         public NuGetActionType ActionType { get; set; }
 
-        public INuGetTelemetryService TelemetryService { get; set; }
+        public KeyValuePair<string, Guid> OperationId
+        {
+            get
+            {
+                if (_operationId.Value == Guid.Empty)
+                {
+                    _operationId = new KeyValuePair<string, Guid>(nameof(OperationId), Guid.NewGuid());
+                }
+                return _operationId;
+            }
+            set
+            {
+                _operationId = value;
+            }
+        }
     }
 
     public class TestExecutionContext : ExecutionContext

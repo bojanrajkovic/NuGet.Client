@@ -2,6 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace NuGet.Common
@@ -42,6 +43,11 @@ namespace NuGet.Common
         public static double GetTimerElapsedTimeInSeconds()
         {
             return GetTimerElapsedTime().TotalSeconds;
+        }
+
+        public static KeyValuePair<string, Guid> GernerateNewOperationId()
+        {
+            return new KeyValuePair<string, Guid>("OperationId", Guid.NewGuid());
         }
     }
 }

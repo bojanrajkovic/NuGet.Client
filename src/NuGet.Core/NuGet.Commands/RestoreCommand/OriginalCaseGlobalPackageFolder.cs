@@ -27,7 +27,14 @@ namespace NuGet.Commands
         private readonly ToolPathResolver _toolPathResolver;
         private readonly VersionFolderPathResolver _pathResolver;
 
-        public OriginalCaseGlobalPackageFolder(RestoreRequest request)
+        public KeyValuePair<string, Guid> ParentId { get; }
+
+        public OriginalCaseGlobalPackageFolder(RestoreRequest request) :
+            this(request, new KeyValuePair<string, Guid>())
+        {
+        }
+
+        public OriginalCaseGlobalPackageFolder(RestoreRequest request, KeyValuePair<string, Guid> parentId)
         {
             if (request == null)
             {
@@ -100,14 +107,15 @@ namespace NuGet.Commands
                     // Install the package.
                     using (packageDependency)
                     {
-                        var installed = await PackageExtractor.InstallFromSourceAsync(
+                        var result = await PackageExtractor.InstallFromSourceAsync(
                             identity,
                             packageDependency,
                             versionFolderPathResolver,
                             originalCaseContext,
-                            token);
+                            token,
+                            ParentId);
 
-                        if (installed)
+                        if (result)
                         {
                             _request.Log.LogMinimal(string.Format(
                                 CultureInfo.CurrentCulture,

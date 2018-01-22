@@ -12,6 +12,11 @@ namespace NuGet.Common
     {
         private IDictionary<string, object> _properties;
 
+        public TelemetryEvent(string eventName) :
+            this(eventName, new Dictionary<string, object>())
+        {
+        }
+
         public TelemetryEvent(string eventName, Dictionary<string, object> properties)
         {
             Name = eventName;
@@ -31,7 +36,7 @@ namespace NuGet.Common
             {
                 if (key != null)
                 {
-                    _properties.TryGetValue(key, out object value);
+                    _properties.TryGetValue(key, out var value);
                     return value;
                 }
                 return null;

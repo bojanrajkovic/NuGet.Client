@@ -1,9 +1,10 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Xml.Linq;
-using NuGet.Common;
 using NuGet.Packaging;
 using NuGet.Packaging.PackageExtraction;
 using NuGet.Packaging.Signing;
@@ -13,6 +14,8 @@ namespace NuGet.VisualStudio
 {
     internal sealed class VSAPIProjectContext : IMSBuildNuGetProjectContext
     {
+        private KeyValuePair<string, Guid> _operationID;
+
         public VSAPIProjectContext()
             : this(false, false)
         {
@@ -66,6 +69,20 @@ namespace NuGet.VisualStudio
 
         public NuGetActionType ActionType { get; set; }
 
-        public INuGetTelemetryService TelemetryService { get; set; }
+        public KeyValuePair<string, Guid> OperationId
+        {
+            get
+            {
+                if (_operationID.Value == Guid.Empty)
+                {
+                    _operationID = new KeyValuePair<string, Guid>(nameof(OperationId), Guid.NewGuid());
+                }
+                return _operationID;
+            }
+            set
+            {
+                _operationID = value;
+            }
+        }
     }
 }
