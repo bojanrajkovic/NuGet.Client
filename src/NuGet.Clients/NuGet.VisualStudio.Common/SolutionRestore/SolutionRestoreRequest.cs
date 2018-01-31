@@ -21,7 +21,7 @@ namespace NuGet.VisualStudio
 
         public RestoreOperationSource RestoreSource { get; }
 
-        public KeyValuePair<string, Guid> OperationId => new KeyValuePair<string, Guid>(nameof(OperationId), Guid.NewGuid());
+        public KeyValuePair<string, Guid> OperationId => TelemetryServiceUtility.GernerateNewOperationId()
 
         public SolutionRestoreRequest(
             bool forceRestore,

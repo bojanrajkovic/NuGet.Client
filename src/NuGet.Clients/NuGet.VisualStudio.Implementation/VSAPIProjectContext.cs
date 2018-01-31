@@ -75,7 +75,7 @@ namespace NuGet.VisualStudio
             {
                 if (_operationID.Value == Guid.Empty)
                 {
-                    _operationID = new KeyValuePair<string, Guid>(nameof(OperationId), Guid.NewGuid());
+                    _operationID = TelemetryServiceUtility.GernerateNewOperationId()
                 }
                 return _operationID;
             }

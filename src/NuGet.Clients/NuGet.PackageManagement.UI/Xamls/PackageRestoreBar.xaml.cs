@@ -137,7 +137,7 @@ namespace NuGet.PackageManagement.UI
         {
             ThreadHelper.ThrowIfNotOnUIThread();
             ShowProgressUI();
-            OperationId = new KeyValuePair<string, Guid>(nameof(OperationId), Guid.NewGuid());
+            OperationId = TelemetryServiceUtility.GernerateNewOperationId()
 
             try
             {

@@ -60,7 +60,7 @@ namespace Test.Utility
             {
                 if (_operationId.Value == Guid.Empty)
                 {
-                    _operationId = new KeyValuePair<string, Guid>(nameof(OperationId), Guid.NewGuid());
+                    _operationId = TelemetryServiceUtility.GernerateNewOperationId()
                 }
                 return _operationId;
             }
