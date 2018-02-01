@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using NuGet.Common;
 
 namespace NuGet.VisualStudio
 {
@@ -21,7 +22,7 @@ namespace NuGet.VisualStudio
 
         public RestoreOperationSource RestoreSource { get; }
 
-        public KeyValuePair<string, Guid> OperationId => TelemetryServiceUtility.GernerateNewOperationId()
+        public KeyValuePair<string, Guid> OperationId => TelemetryServiceUtility.GernerateNewOperationId();
 
         public SolutionRestoreRequest(
             bool forceRestore,

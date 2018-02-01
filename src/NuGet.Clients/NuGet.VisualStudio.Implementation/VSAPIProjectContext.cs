@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Xml.Linq;
+using NuGet.Common;
 using NuGet.Packaging;
 using NuGet.Packaging.PackageExtraction;
 using NuGet.Packaging.Signing;
@@ -75,7 +76,7 @@ namespace NuGet.VisualStudio
             {
                 if (_operationID.Value == Guid.Empty)
                 {
-                    _operationID = TelemetryServiceUtility.GernerateNewOperationId()
+                    _operationID = TelemetryServiceUtility.GernerateNewOperationId();
                 }
                 return _operationID;
             }

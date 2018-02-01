@@ -94,6 +94,11 @@ namespace NuGet.Commands
 
                             restoreTime.Stop();
 
+                            var nooptelemetryEvent = new TelemetryEvent(ProjectRestoreInformation);
+                            nooptelemetryEvent[RestoreId.Key] = RestoreId.Value;
+
+                            telemetry.TelemetryEvent = nooptelemetryEvent;
+
                             return new NoOpRestoreResult(
                                 _success,
                                 _request.ExistingLockFile,

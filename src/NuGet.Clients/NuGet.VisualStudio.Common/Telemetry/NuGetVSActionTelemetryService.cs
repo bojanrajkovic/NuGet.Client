@@ -13,8 +13,6 @@ namespace NuGet.VisualStudio
     public class NuGetVSTelemetryService : INuGetTelemetryService
     {
         private ITelemetrySession _telemetrySession;
-        public static readonly Lazy<string> NuGetVersion
-            = new Lazy<string>(() => ClientVersionUtility.GetNuGetAssemblyVersion());
 
         public NuGetVSTelemetryService(ITelemetrySession telemetrySession)
         {

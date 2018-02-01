@@ -21,6 +21,9 @@ namespace NuGet.PackageManagement.Telemetry
     /// </summary>
     public static class VSTelemetryServiceUtility
     {
+        public static readonly Lazy<string> NuGetVersion
+            = new Lazy<string>(() => ClientVersionUtility.GetNuGetAssemblyVersion());
+
         /// <summary>
         /// Create ActionTelemetryEvent instance.
         /// </summary>
@@ -102,7 +105,7 @@ namespace NuGet.PackageManagement.Telemetry
                 var installedPackagesCount = installedPackages.Count();
 
                 return new ProjectTelemetryEvent(
-                    NuGetVSTelemetryService.NuGetVersion.Value,
+                    NuGetVersion.Value,
                     projectId,
                     projectType,
                     installedPackagesCount);

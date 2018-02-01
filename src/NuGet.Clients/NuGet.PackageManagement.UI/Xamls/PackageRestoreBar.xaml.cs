@@ -12,6 +12,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using System.Xml.Linq;
 using Microsoft.VisualStudio.Shell;
+using NuGet.Common;
 using NuGet.Packaging;
 using NuGet.ProjectManagement;
 using NuGet.VisualStudio;
@@ -137,7 +138,7 @@ namespace NuGet.PackageManagement.UI
         {
             ThreadHelper.ThrowIfNotOnUIThread();
             ShowProgressUI();
-            OperationId = TelemetryServiceUtility.GernerateNewOperationId()
+            OperationId = TelemetryServiceUtility.GernerateNewOperationId();
 
             try
             {
