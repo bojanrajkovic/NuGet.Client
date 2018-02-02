@@ -163,7 +163,7 @@ namespace NuGet.PackageManagement
             }
         }
 
-        public void EmitTelemetryEvent(KeyValuePair<string, Guid> parentId)
+        public void EmitTelemetryEvent(Guid parentId)
         {
             var telemetryEvent = new TelemetryEvent(PackagePreFetcherInformation);
 
@@ -174,9 +174,9 @@ namespace NuGet.PackageManagement
             var packageId = CryptoHashUtility.GenerateUniqueToken(Package.ToString());
             telemetryEvent["PackageId"] = packageId;
 
-            if (parentId.Key != null)
+            if (parentId != Guid.Empty)
             {
-                telemetryEvent[parentId.Key] = parentId.Value.ToString();
+                telemetryEvent["ParentId"] = parentId.ToString();
             }
 
             TelemetryActivity.EmitTelemetryEvent(telemetryEvent);

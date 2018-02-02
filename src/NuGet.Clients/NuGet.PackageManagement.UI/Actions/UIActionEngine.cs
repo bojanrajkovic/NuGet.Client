@@ -210,7 +210,7 @@ namespace NuGet.PackageManagement.UI
             var packageCount = 0;
 
             // Enable granular level telemetry events for nuget ui operation
-            uiService.ProjectContext.OperationId = new KeyValuePair<string, Guid>("OperationId", Guid.NewGuid());
+            uiService.ProjectContext.OperationId = Guid.NewGuid();
 
             await _lockService.ExecuteNuGetOperationAsync(async () =>
             {
@@ -330,7 +330,7 @@ namespace NuGet.PackageManagement.UI
                     uiService.EndOperation();
 
                     var actionTelemetryEvent = VSTelemetryServiceUtility.GetActionTelemetryEvent(
-                        uiService.ProjectContext.OperationId.Value.ToString(),
+                        uiService.ProjectContext.OperationId.ToString(),
                         uiService.Projects,
                         operationType,
                         OperationSource.UI,

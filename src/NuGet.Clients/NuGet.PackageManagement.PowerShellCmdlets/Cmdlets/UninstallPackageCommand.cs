@@ -88,7 +88,7 @@ namespace NuGet.PackageManagement.PowerShellCmdlets
 
             stopWatch.Stop();
             var actionTelemetryEvent = VSTelemetryServiceUtility.GetActionTelemetryEvent(
-                OperationId.Value.ToString(),
+                OperationId.ToString(),
                 new[] { Project },
                 NuGetOperationType.Uninstall,
                 OperationSource.PMC,

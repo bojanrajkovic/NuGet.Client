@@ -15,7 +15,7 @@ namespace NuGet.VisualStudio
 {
     internal sealed class VSAPIProjectContext : IMSBuildNuGetProjectContext
     {
-        private KeyValuePair<string, Guid> _operationID;
+        private Guid _operationID;
 
         public VSAPIProjectContext()
             : this(false, false)
@@ -70,13 +70,13 @@ namespace NuGet.VisualStudio
 
         public NuGetActionType ActionType { get; set; }
 
-        public KeyValuePair<string, Guid> OperationId
+        public Guid OperationId
         {
             get
             {
-                if (_operationID.Value == Guid.Empty)
+                if (_operationID == Guid.Empty)
                 {
-                    _operationID = TelemetryServiceUtility.GernerateNewOperationId();
+                    _operationID = Guid.NewGuid();
                 }
                 return _operationID;
             }

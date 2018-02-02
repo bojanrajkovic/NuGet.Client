@@ -45,8 +45,7 @@ namespace NuGet.Test.Utility
                         async (d) => await stream.CopyToAsync(d),
                         versionFolderPathResolver,
                         pathContext,
-                        CancellationToken.None,
-                        new KeyValuePair<string, System.Guid>());
+                        CancellationToken.None);
                 }
             }
         }

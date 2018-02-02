@@ -27,14 +27,14 @@ namespace NuGet.Commands
 
         private readonly ProjectRestoreRequest _request;
 
-        public KeyValuePair<string, Guid> ParentId { get; }
+        public Guid ParentId { get; }
 
         public ProjectRestoreCommand(ProjectRestoreRequest request) :
-            this(request, new KeyValuePair<string, Guid>())
+            this(request, Guid.Empty)
         {
         }
 
-        public ProjectRestoreCommand(ProjectRestoreRequest request, KeyValuePair<string, Guid> parentId)
+        public ProjectRestoreCommand(ProjectRestoreRequest request, Guid parentId)
         {
             _logger = request.Log;
             _request = request;

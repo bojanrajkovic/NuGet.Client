@@ -318,7 +318,7 @@ namespace NuGet.CommandLine.Test.Caching
                     identity,
                     fileStream,
                     GlobalPackagesPath,
-                    new KeyValuePair<string, Guid>(),
+                    Guid.Empty,
                     Common.NullLogger.Instance,
                     CancellationToken.None))
                 {

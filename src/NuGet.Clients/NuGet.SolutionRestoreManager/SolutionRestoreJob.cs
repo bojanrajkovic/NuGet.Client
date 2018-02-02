@@ -234,7 +234,7 @@ namespace NuGet.SolutionRestoreManager
                 project => project.GetMetadata<string>(NuGetProjectMetadataKeys.ProjectId)).ToArray();
 
             var restoreTelemetryEvent = new RestoreTelemetryEvent(
-                _nuGetProjectContext.OperationId.Value.ToString(),
+                _nuGetProjectContext.OperationId.ToString(),
                 projectIds,
                 source,
                 startTime,

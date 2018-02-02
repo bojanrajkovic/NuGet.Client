@@ -10,6 +10,6 @@ namespace NuGet.Packaging.Signing
 {
     public interface IPackageSignatureVerifier
     {
-        Task<VerifySignaturesResult> VerifySignaturesAsync(ISignedPackageReader package, CancellationToken token, KeyValuePair<string, Guid> parentId);
+        Task<VerifySignaturesResult> VerifySignaturesAsync(ISignedPackageReader package, CancellationToken token, Guid parentId);
     }
 }

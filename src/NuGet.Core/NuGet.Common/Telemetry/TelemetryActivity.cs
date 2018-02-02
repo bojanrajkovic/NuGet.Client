@@ -16,19 +16,27 @@ namespace NuGet.Common
 
         public TelemetryEvent TelemetryEvent { get; set;}
 
-        public KeyValuePair<string, Guid> ParentId { get; }
+        public Guid ParentId { get; }
+
+        public Guid OperationId { get; }
 
         public static INuGetTelemetryService NuGetTelemetryService { get; set; }
 
-        public TelemetryActivity(KeyValuePair<string, Guid> parentId) :
-            this(parentId, null)
+        public TelemetryActivity(Guid parentId) :
+            this(parentId, Guid.Empty, null)
         {
         }
 
-        public TelemetryActivity(KeyValuePair<string, Guid> parentId, TelemetryEvent telemetryEvent)
+        public TelemetryActivity(Guid parentId, Guid opeartionId):
+            this(parentId, opeartionId, null)
+        {
+        }
+
+        public TelemetryActivity(Guid parentId, Guid opeartionId, TelemetryEvent telemetryEvent)
         {
             TelemetryEvent = telemetryEvent;
             ParentId = parentId;
+            OperationId = opeartionId;
 
             _startTime = DateTimeOffset.Now;
             _stopwatch = Stopwatch.StartNew();
@@ -57,12 +65,17 @@ namespace NuGet.Common
                 TelemetryEvent["EndTime"] = endTime.ToString();
                 TelemetryEvent["Duration"] = _stopwatch.Elapsed.TotalSeconds;
 
-                if (ParentId.Key != null)
+                if (ParentId != Guid.Empty)
                 {
-                    TelemetryEvent[ParentId.Key] = ParentId.Value.ToString();
+                    TelemetryEvent[nameof(ParentId)] = ParentId.ToString();
                 }
 
-                foreach(var interval in _intervalList)
+                if (OperationId != Guid.Empty)
+                {
+                    TelemetryEvent[nameof(OperationId)] = OperationId.ToString();
+                }
+
+                foreach (var interval in _intervalList)
                 {
                     TelemetryEvent[interval.Item1] = interval.Item2.TotalSeconds;
                 }
@@ -74,6 +87,16 @@ namespace NuGet.Common
         public static void EmitTelemetryEvent(TelemetryEvent TelemetryEvent)
         {
             NuGetTelemetryService?.EmitTelemetryEvent(TelemetryEvent);
+        }
+
+        public static TelemetryActivity CreateTelemetryActivityWithNewOperationId(Guid parentId)
+        {
+            return new TelemetryActivity(parentId, Guid.NewGuid(), null);
+        }
+
+        public static TelemetryActivity CreateTelemetryActivityWithNewOperationId()
+        {
+            return new TelemetryActivity(Guid.Empty, Guid.NewGuid(), null);
         }
     }
 }

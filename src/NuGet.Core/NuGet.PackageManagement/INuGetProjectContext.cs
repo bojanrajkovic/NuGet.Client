@@ -39,7 +39,7 @@ namespace NuGet.ProjectManagement
 
         NuGetActionType ActionType { get; set; }
 
-        KeyValuePair<string, Guid> OperationId { get; set; }
+        Guid OperationId { get; set; }
     }
 
     /// <summary>

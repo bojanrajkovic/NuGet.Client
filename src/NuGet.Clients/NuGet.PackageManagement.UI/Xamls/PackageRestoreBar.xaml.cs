@@ -42,7 +42,7 @@ namespace NuGet.PackageManagement.UI
 
         public NuGetActionType ActionType { get; set; }
 
-        public KeyValuePair<string, Guid> OperationId { get; set; }
+        public Guid OperationId { get; set; }
 
         public PackageRestoreBar(ISolutionManager solutionManager, IPackageRestoreManager packageRestoreManager)
         {
@@ -138,7 +138,7 @@ namespace NuGet.PackageManagement.UI
         {
             ThreadHelper.ThrowIfNotOnUIThread();
             ShowProgressUI();
-            OperationId = TelemetryServiceUtility.GernerateNewOperationId();
+            OperationId = Guid.NewGuid();
 
             try
             {

@@ -2,7 +2,6 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Xml.Linq;
 using NuGet.Packaging;
@@ -66,6 +65,6 @@ namespace NuGet.CommandLine
 
         public NuGetActionType ActionType { get; set; }
 
-        public KeyValuePair<string, Guid> OperationId { get; set; }
+        public Guid OperationId { get; set; }
     }
 }

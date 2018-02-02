@@ -416,8 +416,7 @@ namespace NuGet.Test.Utility
                                 XmlDocFileSaveMode.None,
                                 NullLogger.Instance,
                                 signedPackageVerifier: null),
-                            CancellationToken.None,
-                            new KeyValuePair<string, Guid>());
+                            CancellationToken.None);
                     }
                 }
             }
@@ -462,7 +461,7 @@ namespace NuGet.Test.Utility
             {
                 using (var stream = File.OpenRead(path))
                 {
-                    await PackageExtractor.ExtractPackageAsync(stream, resolver, context, CancellationToken.None, new KeyValuePair<string, Guid>());
+                    await PackageExtractor.ExtractPackageAsync(stream, resolver, context, CancellationToken.None);
                 }
             }
         }

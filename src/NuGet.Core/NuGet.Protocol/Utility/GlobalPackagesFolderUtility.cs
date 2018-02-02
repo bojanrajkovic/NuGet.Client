@@ -77,7 +77,7 @@ namespace NuGet.Protocol
             PackageIdentity packageIdentity,
             Stream packageStream,
             string globalPackagesFolder,
-            KeyValuePair<string, Guid> parentId,
+            Guid parentId,
             ILogger logger,
             CancellationToken token)
         {

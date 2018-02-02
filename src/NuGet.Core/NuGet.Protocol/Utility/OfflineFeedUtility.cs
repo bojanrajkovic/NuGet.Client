@@ -219,7 +219,7 @@ namespace NuGet.Protocol.Core.Types
                                 versionFolderPathResolver,
                                 packageExtractionContext,
                                 token,
-                                new KeyValuePair<string, Guid>());
+                                Guid.Empty);
                         }
 
                         var message = string.Format(

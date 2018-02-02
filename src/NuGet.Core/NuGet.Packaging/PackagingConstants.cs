@@ -13,7 +13,6 @@ namespace NuGet.Packaging
 
         public static readonly string ContentFilesDefaultBuildAction = "Compile";
         public static readonly string PackageVerifyDurationName = "PackageVerifyDuration";
-        public static readonly string PackageExtractionId = "PackageExtractionId";
 
         public static class Folders
         {

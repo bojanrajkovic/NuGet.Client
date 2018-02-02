@@ -25,7 +25,7 @@ namespace NuGet.Packaging.Signing
             _settings = settings ?? throw new ArgumentNullException(nameof(settings));
         }
 
-        public async Task<VerifySignaturesResult> VerifySignaturesAsync(ISignedPackageReader package, CancellationToken token, KeyValuePair<string, Guid> parentId = new KeyValuePair<string, Guid>())
+        public async Task<VerifySignaturesResult> VerifySignaturesAsync(ISignedPackageReader package, CancellationToken token, Guid parentId = default(Guid))
         {
             var valid = false;
             var trustResults = new List<PackageVerificationResult>();

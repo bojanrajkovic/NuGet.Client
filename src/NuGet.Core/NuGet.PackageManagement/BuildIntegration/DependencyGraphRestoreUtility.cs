@@ -34,7 +34,7 @@ namespace NuGet.PackageManagement
             RestoreCommandProvidersCache providerCache,
             Action<SourceCacheContext> cacheContextModifier,
             IEnumerable<SourceRepository> sources,
-            KeyValuePair<string, Guid> parentId,
+            Guid parentId,
             bool forceRestore,
             DependencyGraphSpec dgSpec,
             ILogger log,
@@ -79,7 +79,7 @@ namespace NuGet.PackageManagement
             RestoreCommandProvidersCache providerCache,
             Action<SourceCacheContext> cacheContextModifier,
             IEnumerable<SourceRepository> sources,
-            KeyValuePair<string, Guid> parentId,
+            Guid parentId,
             bool forceRestore,
             ILogger log,
             CancellationToken token)
@@ -145,7 +145,7 @@ namespace NuGet.PackageManagement
             RestoreCommandProvidersCache providerCache,
             Action<SourceCacheContext> cacheContextModifier,
             IEnumerable<SourceRepository> sources,
-            KeyValuePair<string, Guid> parentId,
+            Guid parentId,
             ILogger log,
             CancellationToken token)
         {
@@ -184,7 +184,7 @@ namespace NuGet.PackageManagement
             RestoreCommandProvidersCache providerCache,
             Action<SourceCacheContext> cacheContextModifier,
             IEnumerable<SourceRepository> sources,
-            KeyValuePair<string, Guid> parentId,
+            Guid parentId,
             ILogger log,
             CancellationToken token)
         {
@@ -277,7 +277,7 @@ namespace NuGet.PackageManagement
             SourceCacheContext sourceCacheContext,
             IEnumerable<SourceRepository> sources,
             DependencyGraphSpec dgFile,
-            KeyValuePair<string, Guid> parentId,
+            Guid parentId,
             bool forceRestore)
         {
             var caching = new CachingSourceProvider(new PackageSourceProvider(context.Settings));

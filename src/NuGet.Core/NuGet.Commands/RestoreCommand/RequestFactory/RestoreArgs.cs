@@ -59,7 +59,7 @@ namespace NuGet.Commands
 
         public bool HideWarningsAndErrors { get; set; } = false;
 
-        public KeyValuePair<string, Guid> ParentId { get; set; }
+        public Guid ParentId { get; set; }
 
         // Cache directory -> ISettings
         private ConcurrentDictionary<string, ISettings> _settingsCache

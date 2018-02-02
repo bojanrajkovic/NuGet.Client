@@ -106,6 +106,6 @@ namespace NuGet.PackageManagement.UI
 
         public NuGetActionType ActionType { get; set; }
 
-        public KeyValuePair<string, Guid> OperationId { get; set; }
+        public Guid OperationId { get; set; }
     }
 }

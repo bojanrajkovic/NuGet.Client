@@ -87,7 +87,7 @@ namespace NuGet.PackageManagement.PowerShellCmdlets
             // stop timer for telemetry event and create action telemetry event instance
             TelemetryServiceUtility.StopTimer();
             var actionTelemetryEvent = VSTelemetryServiceUtility.GetActionTelemetryEvent(
-                OperationId.Value.ToString(),
+                OperationId.ToString(),
                 new[] { Project },
                 NuGetOperationType.Install,
                 OperationSource.PMC,

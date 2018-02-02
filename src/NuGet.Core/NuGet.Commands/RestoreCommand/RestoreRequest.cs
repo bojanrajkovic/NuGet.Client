@@ -159,6 +159,6 @@ namespace NuGet.Commands
                             SignatureVerificationProviderFactory.GetSignatureVerificationProviders(),
                             SignedPackageVerifierSettings.Default);
 
-        public KeyValuePair<string, Guid> ParentId { get; set;}
+        public Guid ParentId { get; set;}
     }
 }

@@ -27,14 +27,14 @@ namespace NuGet.Commands
         private readonly ToolPathResolver _toolPathResolver;
         private readonly VersionFolderPathResolver _pathResolver;
 
-        public KeyValuePair<string, Guid> ParentId { get; }
+        public Guid ParentId { get; }
 
         public OriginalCaseGlobalPackageFolder(RestoreRequest request) :
-            this(request, new KeyValuePair<string, Guid>())
+            this(request, Guid.Empty)
         {
         }
 
-        public OriginalCaseGlobalPackageFolder(RestoreRequest request, KeyValuePair<string, Guid> parentId)
+        public OriginalCaseGlobalPackageFolder(RestoreRequest request, Guid parentId)
         {
             if (request == null)
             {

@@ -1123,7 +1123,7 @@ namespace NuGet.PackageManagement
                 // emit gather dependency telemetry event and restart timer
                 stopWatch.Stop();
 
-                var gatherTelemetryEvent = new ActionTelemetryStepEvent(nuGetProjectContext.OperationId.Value.ToString(),
+                var gatherTelemetryEvent = new ActionTelemetryStepEvent(nuGetProjectContext.OperationId.ToString(),
                     string.Format(TelemetryConstants.GatherDependencyStepName, projectId), stopWatch.Elapsed.TotalSeconds);
 
                 TelemetryActivity.EmitTelemetryEvent(gatherTelemetryEvent);
@@ -1208,7 +1208,7 @@ namespace NuGet.PackageManagement
                 // emit resolve dependency telemetry event and restart timer
                 stopWatch.Stop();
 
-                var resolveTelemetryEvent = new ActionTelemetryStepEvent(nuGetProjectContext.OperationId.Value.ToString(),
+                var resolveTelemetryEvent = new ActionTelemetryStepEvent(nuGetProjectContext.OperationId.ToString(),
                     string.Format(TelemetryConstants.ResolveDependencyStepName, projectId), stopWatch.Elapsed.TotalSeconds);
 
                 TelemetryActivity.EmitTelemetryEvent(resolveTelemetryEvent);
@@ -1245,7 +1245,7 @@ namespace NuGet.PackageManagement
                 // emit resolve actions telemetry event
                 stopWatch.Stop();
 
-                var actionTelemetryEvent = new ActionTelemetryStepEvent(nuGetProjectContext.OperationId.Value.ToString(),
+                var actionTelemetryEvent = new ActionTelemetryStepEvent(nuGetProjectContext.OperationId.ToString(),
                     string.Format(TelemetryConstants.ResolvedActionsStepName, projectId), stopWatch.Elapsed.TotalSeconds);
 
                 TelemetryActivity.EmitTelemetryEvent(actionTelemetryEvent);
@@ -1628,7 +1628,7 @@ namespace NuGet.PackageManagement
 
                     // emit gather dependency telemetry event and restart timer
                     stopWatch.Stop();
-                    var gatherTelemetryEvent = new ActionTelemetryStepEvent(nuGetProjectContext.OperationId.Value.ToString(),
+                    var gatherTelemetryEvent = new ActionTelemetryStepEvent(nuGetProjectContext.OperationId.ToString(),
                         string.Format(TelemetryConstants.GatherDependencyStepName, projectId), stopWatch.Elapsed.TotalSeconds);
 
                     TelemetryActivity.EmitTelemetryEvent(gatherTelemetryEvent);
@@ -1693,7 +1693,7 @@ namespace NuGet.PackageManagement
                     // emit resolve dependency telemetry event and restart timer
                     stopWatch.Stop();
 
-                    var resolveTelemetryEvent = new ActionTelemetryStepEvent(nuGetProjectContext.OperationId.Value.ToString(),
+                    var resolveTelemetryEvent = new ActionTelemetryStepEvent(nuGetProjectContext.OperationId.ToString(),
                         string.Format(TelemetryConstants.ResolveDependencyStepName, projectId), stopWatch.Elapsed.TotalSeconds);
 
                     TelemetryActivity.EmitTelemetryEvent(resolveTelemetryEvent);
@@ -1785,7 +1785,7 @@ namespace NuGet.PackageManagement
             // emit resolve actions telemetry event
             stopWatch.Stop();
 
-            var actionTelemetryEvent = new ActionTelemetryStepEvent(nuGetProjectContext.OperationId.Value.ToString(),
+            var actionTelemetryEvent = new ActionTelemetryStepEvent(nuGetProjectContext.OperationId.ToString(),
                 string.Format(TelemetryConstants.ResolvedActionsStepName, projectId), stopWatch.Elapsed.TotalSeconds);
 
             TelemetryActivity.EmitTelemetryEvent(actionTelemetryEvent);
@@ -2407,7 +2407,7 @@ namespace NuGet.PackageManagement
                 DatetimeUtility.ToReadableTimeFormat(stopWatch.Elapsed));
 
             // emit resolve actions telemetry event
-            var actionTelemetryEvent = new ActionTelemetryStepEvent(nuGetProjectContext.OperationId.Value.ToString(),
+            var actionTelemetryEvent = new ActionTelemetryStepEvent(nuGetProjectContext.OperationId.ToString(),
                 string.Format(TelemetryConstants.ExecuteActionStepName, projectId), stopWatch.Elapsed.TotalSeconds);
 
             TelemetryActivity.EmitTelemetryEvent(actionTelemetryEvent);
@@ -2635,7 +2635,7 @@ namespace NuGet.PackageManagement
 
             stopWatch.Stop();
 
-            var actionTelemetryEvent = new ActionTelemetryStepEvent(nuGetProjectContext.OperationId.Value.ToString(),
+            var actionTelemetryEvent = new ActionTelemetryStepEvent(nuGetProjectContext.OperationId.ToString(),
                 string.Format(TelemetryConstants.PreviewBuildIntegratedStepName, projectId), stopWatch.Elapsed.TotalSeconds);
 
             TelemetryActivity.EmitTelemetryEvent(actionTelemetryEvent);

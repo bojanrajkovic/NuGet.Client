@@ -28,12 +28,12 @@ namespace NuGet.Commands
 
         private bool _success = true;
 
+        private Guid _operationId;
+
         private readonly Dictionary<RestoreTargetGraph, Dictionary<string, LibraryIncludeFlags>> _includeFlagGraphs
             = new Dictionary<RestoreTargetGraph, Dictionary<string, LibraryIncludeFlags>>();
 
-        public KeyValuePair<string, Guid> ParentId { get; }
-
-        public KeyValuePair<string, Guid> RestoreId = new KeyValuePair<string, Guid>(nameof(RestoreId), Guid.NewGuid());
+        public Guid ParentId { get; }
 
         public const string ProjectRestoreInformation = "ProjectRestoreInformation";
 
@@ -66,15 +66,16 @@ namespace NuGet.Commands
 
         public async Task<RestoreResult> ExecuteAsync(CancellationToken token)
         {
-            using (var telemetry = new TelemetryActivity(ParentId))
+            using (var telemetry = TelemetryActivity.CreateTelemetryActivityWithNewOperationId(ParentId))
             {
+                _operationId = telemetry.OperationId;
                 var restoreTime = Stopwatch.StartNew();
 
                 // Local package folders (non-sources)
                 var localRepositories = new List<NuGetv3LocalRepository>
-            {
-                _request.DependencyProviders.GlobalPackages
-            };
+                {
+                    _request.DependencyProviders.GlobalPackages
+                };
 
                 localRepositories.AddRange(_request.DependencyProviders.FallbackPackageFolders);
 
@@ -95,8 +96,6 @@ namespace NuGet.Commands
                             restoreTime.Stop();
 
                             var nooptelemetryEvent = new TelemetryEvent(ProjectRestoreInformation);
-                            nooptelemetryEvent[RestoreId.Key] = RestoreId.Value;
-
                             telemetry.TelemetryEvent = nooptelemetryEvent;
 
                             return new NoOpRestoreResult(
@@ -197,7 +196,6 @@ namespace NuGet.Commands
                 restoreTime.Stop();
 
                 var telemetryEvent = new TelemetryEvent(ProjectRestoreInformation);
-                telemetryEvent[RestoreId.Key] = RestoreId.Value;
 
                 telemetry.TelemetryEvent = telemetryEvent;
 
@@ -327,7 +325,7 @@ namespace NuGet.Commands
             // step.
             if (!_request.IsLowercasePackagesDirectory)
             {
-                var originalCase = new OriginalCaseGlobalPackageFolder(_request, RestoreId);
+                var originalCase = new OriginalCaseGlobalPackageFolder(_request, _operationId);
 
                 // Convert the case of all the packages used in the project restore
                 await originalCase.CopyPackagesToOriginalCaseAsync(graphs, token);
@@ -585,7 +583,7 @@ namespace NuGet.Commands
                 _request.ExistingLockFile,
                 _logger);
 
-            var projectRestoreCommand = new ProjectRestoreCommand(projectRestoreRequest, RestoreId);
+            var projectRestoreCommand = new ProjectRestoreCommand(projectRestoreRequest, _operationId);
 
             var result = await projectRestoreCommand.TryRestoreAsync(
                 projectRange,

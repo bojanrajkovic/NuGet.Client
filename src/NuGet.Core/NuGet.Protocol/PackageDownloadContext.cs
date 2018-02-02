@@ -41,6 +41,6 @@ namespace NuGet.Protocol.Core.Types
         public bool DirectDownload { get; }
         public string DirectDownloadDirectory { get; }
 
-        public KeyValuePair<string, Guid> ParentId { get; set; }
+        public Guid ParentId { get; set; }
     }
 }

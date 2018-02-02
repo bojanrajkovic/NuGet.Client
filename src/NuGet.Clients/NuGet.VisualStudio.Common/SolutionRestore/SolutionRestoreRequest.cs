@@ -22,7 +22,7 @@ namespace NuGet.VisualStudio
 
         public RestoreOperationSource RestoreSource { get; }
 
-        public KeyValuePair<string, Guid> OperationId => TelemetryServiceUtility.GernerateNewOperationId();
+        public Guid OperationId => Guid.NewGuid();
 
         public SolutionRestoreRequest(
             bool forceRestore,

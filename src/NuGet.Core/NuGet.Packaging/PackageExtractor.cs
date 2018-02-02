@@ -21,7 +21,7 @@ namespace NuGet.Packaging
             PackagePathResolver packagePathResolver,
             PackageExtractionContext packageExtractionContext,
             CancellationToken token,
-            KeyValuePair<string, Guid> parentId = new KeyValuePair<string, Guid>())
+            Guid parentId = default(Guid))
         {
             if (packageStream == null)
             {
@@ -45,10 +45,9 @@ namespace NuGet.Packaging
 
             var packageSaveMode = packageExtractionContext.PackageSaveMode;
             var filesAdded = new List<string>();
-            var extractionId = Guid.NewGuid();
             var nupkgStartPosition = packageStream.Position;
 
-            using (var telemetry = new TelemetryActivity(parentId))
+            using (var telemetry = TelemetryActivity.CreateTelemetryActivityWithNewOperationId(parentId))
             {
                 using (var packageReader = new PackageArchiveReader(packageStream, leaveStreamOpen: true))
                 {
@@ -63,7 +62,7 @@ namespace NuGet.Packaging
                         telemetry.StartIntervalMeasure();
 
                         await VerifyPackageSignatureAsync(
-                         new KeyValuePair<string, Guid>(PackagingConstants.PackageExtractionId, extractionId),
+                         telemetry.OperationId,
                          packageIdentityFromNuspec,
                          packageExtractionContext,
                          packageReader,
@@ -74,7 +73,7 @@ namespace NuGet.Packaging
                     catch (SignatureException)
                     {
                         telemetry.TelemetryEvent = new PackageExtractionTelemetryEvent(
-                                       extractionId,
+                                       telemetry.OperationId,
                                        packageExtractionContext.PackageSaveMode,
                                        NuGetOperationStatus.Failed,
                                        ExtractionSource.NuGetFolderProject,
@@ -135,7 +134,7 @@ namespace NuGet.Packaging
                             token));
                     }
                     telemetry.TelemetryEvent = new PackageExtractionTelemetryEvent(
-                                      extractionId,
+                                      telemetry.OperationId,
                                       packageExtractionContext.PackageSaveMode,
                                       NuGetOperationStatus.Succeeded,
                                       ExtractionSource.NuGetFolderProject,
@@ -153,7 +152,7 @@ namespace NuGet.Packaging
             PackagePathResolver packagePathResolver,
             PackageExtractionContext packageExtractionContext,
             CancellationToken token,
-            KeyValuePair<string, Guid> parentId = new KeyValuePair<string, Guid>())
+            Guid parentId = default(Guid))
         {
             if (packageStream == null)
             {
@@ -185,7 +184,7 @@ namespace NuGet.Packaging
                     telemetry.StartIntervalMeasure();
 
                     await VerifyPackageSignatureAsync(
-                         new KeyValuePair<string, Guid>(PackagingConstants.PackageExtractionId, extractionId),
+                         telemetry.OperationId,
                          packageIdentityFromNuspec,
                          packageExtractionContext,
                          packageReader,
@@ -262,7 +261,7 @@ namespace NuGet.Packaging
             PackagePathResolver packagePathResolver,
             PackageExtractionContext packageExtractionContext,
             CancellationToken token,
-            KeyValuePair<string, Guid> parentId = new KeyValuePair<string, Guid>())
+            Guid parentId = default(Guid))
         {
             if (packageReader == null)
             {
@@ -294,7 +293,7 @@ namespace NuGet.Packaging
                     telemetry.StartIntervalMeasure();
 
                     await VerifyPackageSignatureAsync(
-                        new KeyValuePair<string, Guid>(PackagingConstants.PackageExtractionId, extractionId),
+                        telemetry.OperationId,
                         packageIdentityFromNuspec,
                         packageExtractionContext,
                         packageReader,
@@ -379,7 +378,7 @@ namespace NuGet.Packaging
             VersionFolderPathResolver versionFolderPathResolver,
             PackageExtractionContext packageExtractionContext,
             CancellationToken token,
-            KeyValuePair<string, Guid> parentId = new KeyValuePair<string, Guid>())
+            Guid parentId = default(Guid))
         {
             if (copyToAsync == null)
             {
@@ -473,7 +472,7 @@ namespace NuGet.Packaging
                                             telemetry.StartIntervalMeasure();
 
                                             await VerifyPackageSignatureAsync(
-                                                new KeyValuePair<string, Guid>(PackagingConstants.PackageExtractionId, extractionId),
+                                                telemetry.OperationId,
                                                 packageIdentity,
                                                 packageExtractionContext,
                                                 packageReader,
@@ -607,7 +606,7 @@ namespace NuGet.Packaging
             VersionFolderPathResolver versionFolderPathResolver,
             PackageExtractionContext packageExtractionContext,
             CancellationToken token,
-            KeyValuePair<string, Guid> parentId = new KeyValuePair<string, Guid>())
+            Guid parentId = default(Guid))
         {
             if (packageDownloader == null)
             {
@@ -620,7 +619,7 @@ namespace NuGet.Packaging
             }
 
             var logger = packageExtractionContext.Logger;
-            var extractionId = Guid.NewGuid();
+            var operationId = Guid.NewGuid();
 
             using (var telemetry = new TelemetryActivity(parentId))
             {
@@ -689,7 +688,7 @@ namespace NuGet.Packaging
                                     telemetry.StartIntervalMeasure();
 
                                     await VerifyPackageSignatureAsync(
-                                        new KeyValuePair<string, Guid>(PackagingConstants.PackageExtractionId, extractionId),
+                                        telemetry.OperationId,
                                         packageIdentity,
                                         packageExtractionContext,
                                         packageDownloader.SignedPackageReader,
@@ -725,7 +724,7 @@ namespace NuGet.Packaging
                                     }
 
                                     telemetry.TelemetryEvent = new PackageExtractionTelemetryEvent(
-                                        extractionId,
+                                        operationId,
                                         packageExtractionContext.PackageSaveMode,
                                         NuGetOperationStatus.Failed,
                                         ExtractionSource.RestoreCommand,
@@ -830,7 +829,7 @@ namespace NuGet.Packaging
                             logger.LogVerbose($"Completed installation of {packageIdentity.Id} {packageIdentity.Version}");
 
                             telemetry.TelemetryEvent = new PackageExtractionTelemetryEvent(
-                                extractionId,
+                                operationId,
                                 packageExtractionContext.PackageSaveMode,
                                 NuGetOperationStatus.Succeeded,
                                 ExtractionSource.RestoreCommand,
@@ -843,7 +842,7 @@ namespace NuGet.Packaging
                                                 + $"{packageIdentity.Id} {packageIdentity.Version}");
 
                             telemetry.TelemetryEvent = new PackageExtractionTelemetryEvent(
-                                extractionId,
+                                operationId,
                                 packageExtractionContext.PackageSaveMode,
                                 NuGetOperationStatus.NoOp,
                                 ExtractionSource.RestoreCommand,
@@ -980,7 +979,7 @@ namespace NuGet.Packaging
         }
 
         private static async Task VerifyPackageSignatureAsync(
-            KeyValuePair<string, Guid> parentId,
+            Guid parentId,
             PackageIdentity package,
             PackageExtractionContext packageExtractionContext,
             ISignedPackageReader signedPackageReader,

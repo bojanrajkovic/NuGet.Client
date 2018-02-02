@@ -15,7 +15,7 @@ namespace Test.Utility
 {
     public class TestNuGetProjectContext : IMSBuildNuGetProjectContext
     {
-        private KeyValuePair<string, Guid> _operationId;
+        private Guid _operationId;
         public TestExecutionContext TestExecutionContext { get; set; }
 
         public void Log(MessageLevel level, string message, params object[] args)
@@ -54,13 +54,13 @@ namespace Test.Utility
 
         public NuGetActionType ActionType { get; set; }
 
-        public KeyValuePair<string, Guid> OperationId
+        public Guid OperationId
         {
             get
             {
-                if (_operationId.Value == Guid.Empty)
+                if (_operationId == Guid.Empty)
                 {
-                    _operationId = TelemetryServiceUtility.GernerateNewOperationId();
+                    _operationId = Guid.NewGuid();
                 }
                 return _operationId;
             }

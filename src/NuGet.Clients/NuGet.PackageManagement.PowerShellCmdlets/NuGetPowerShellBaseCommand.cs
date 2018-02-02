@@ -45,7 +45,7 @@ namespace NuGet.PackageManagement.PowerShellCmdlets
         private readonly ISourceRepositoryProvider _sourceRepositoryProvider;
         private readonly ICommonOperations _commonOperations;
         private readonly IDeleteOnRestartManager _deleteOnRestartManager;
-        private KeyValuePair<string, Guid> _operationId;
+        private Guid _operationId;
 
         protected int _packageCount;
         protected NuGetOperationStatus _status = NuGetOperationStatus.Succeeded;
@@ -1099,13 +1099,13 @@ namespace NuGet.PackageManagement.PowerShellCmdlets
 
         public NuGetActionType ActionType { get; set; }
 
-        public KeyValuePair<string, Guid> OperationId
+        public Guid OperationId
         {
             get
             {
-                if (_operationId.Value == Guid.Empty)
+                if (_operationId == Guid.Empty)
                 {
-                    _operationId = TelemetryServiceUtility.GernerateNewOperationId();
+                    _operationId = Guid.NewGuid();
                 }
                 return _operationId;
             }
