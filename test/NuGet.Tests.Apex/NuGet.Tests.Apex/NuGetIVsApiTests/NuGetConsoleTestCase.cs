@@ -9,6 +9,7 @@ using Xunit;
 using Microsoft.Build.Construction;
 using Microsoft.Build.Evaluation;
 using System;
+using System.Linq;
 using System.Globalization;
 
 namespace NuGet.Tests.Apex
@@ -292,7 +293,7 @@ namespace NuGet.Tests.Apex
                 packageReferences.Single().SetMetadataValue("IsImplicitlyDefined", "true");
                 project.Save();
                 
-                ProjectCollection.GlobalProjectCollection.UnloadProject(project);
+                Microsoft.Build.Evaluation.ProjectCollection.GlobalProjectCollection.UnloadProject(project);
 
                 testContext.Project.Load();
                 testContext.SolutionService.Build();
@@ -307,7 +308,7 @@ namespace NuGet.Tests.Apex
 
         private static Project GetProject(string projectCSProjPath)
         {
-            return new Project(ProjectRootElement.Open(projectCSProjPath, ProjectCollection.GlobalProjectCollection, preserveFormatting: true));
+            return new Project(ProjectRootElement.Open(projectCSProjPath, Microsoft.Build.Evaluation.ProjectCollection.GlobalProjectCollection, preserveFormatting: true));
         }
 
         private static IEnumerable<ProjectItem> GetPackageReferences(Project project, string packageId)
