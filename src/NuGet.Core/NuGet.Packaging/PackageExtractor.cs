@@ -73,7 +73,6 @@ namespace NuGet.Packaging
                     catch (SignatureException)
                     {
                         telemetry.TelemetryEvent = new PackageExtractionTelemetryEvent(
-                                       telemetry.OperationId,
                                        packageExtractionContext.PackageSaveMode,
                                        NuGetOperationStatus.Failed,
                                        ExtractionSource.NuGetFolderProject,
@@ -134,7 +133,6 @@ namespace NuGet.Packaging
                             token));
                     }
                     telemetry.TelemetryEvent = new PackageExtractionTelemetryEvent(
-                                      telemetry.OperationId,
                                       packageExtractionContext.PackageSaveMode,
                                       NuGetOperationStatus.Succeeded,
                                       ExtractionSource.NuGetFolderProject,
@@ -175,7 +173,7 @@ namespace NuGet.Packaging
             var filesAdded = new List<string>();
 
 
-            using (var telemetry = new TelemetryActivity(parentId))
+            using (var telemetry = TelemetryActivity.CreateTelemetryActivityWithNewOperationId(parentId))
             {
                 var packageIdentityFromNuspec = await packageReader.GetIdentityAsync(token);
 
@@ -195,7 +193,6 @@ namespace NuGet.Packaging
                 catch (SignatureException)
                 {
                     telemetry.TelemetryEvent = new PackageExtractionTelemetryEvent(
-                                       extractionId,
                                        packageExtractionContext.PackageSaveMode,
                                        NuGetOperationStatus.Failed,
                                        ExtractionSource.NuGetFolderProject,
@@ -246,7 +243,6 @@ namespace NuGet.Packaging
                 }
 
                 telemetry.TelemetryEvent = new PackageExtractionTelemetryEvent(
-                                       extractionId,
                                        packageExtractionContext.PackageSaveMode,
                                        NuGetOperationStatus.Succeeded,
                                        ExtractionSource.NuGetFolderProject,
@@ -284,7 +280,7 @@ namespace NuGet.Packaging
             var extractionId = Guid.NewGuid();
             var filesAdded = new List<string>();
 
-            using (var telemetry = new TelemetryActivity(parentId))
+            using (var telemetry = TelemetryActivity.CreateTelemetryActivityWithNewOperationId(parentId))
             {
                 var packageIdentityFromNuspec = await packageReader.GetIdentityAsync(token);
 
@@ -304,7 +300,6 @@ namespace NuGet.Packaging
                 catch (SignatureException)
                 {
                     telemetry.TelemetryEvent = new PackageExtractionTelemetryEvent(
-                                       extractionId,
                                        packageExtractionContext.PackageSaveMode,
                                        NuGetOperationStatus.Failed,
                                        ExtractionSource.NuGetFolderProject,
@@ -348,7 +343,6 @@ namespace NuGet.Packaging
                 }
 
                 telemetry.TelemetryEvent = new PackageExtractionTelemetryEvent(
-                                       extractionId,
                                        packageExtractionContext.PackageSaveMode,
                                        NuGetOperationStatus.Succeeded,
                                        ExtractionSource.NuGetFolderProject,
@@ -393,7 +387,7 @@ namespace NuGet.Packaging
             var logger = packageExtractionContext.Logger;
             var extractionId = Guid.NewGuid();
 
-            using (var telemetry = new TelemetryActivity(parentId))
+            using (var telemetry = TelemetryActivity.CreateTelemetryActivityWithNewOperationId(parentId))
             {
 
                 var targetPath = versionFolderPathResolver.GetInstallPath(packageIdentity.Id, packageIdentity.Version);
@@ -537,7 +531,6 @@ namespace NuGet.Packaging
                                 }
 
                                 telemetry.TelemetryEvent = new PackageExtractionTelemetryEvent(
-                                       extractionId,
                                        packageExtractionContext.PackageSaveMode,
                                        NuGetOperationStatus.Failed,
                                        ExtractionSource.DownloadResource,
@@ -575,7 +568,6 @@ namespace NuGet.Packaging
                             logger.LogVerbose($"Completed installation of {packageIdentity.Id} {packageIdentity.Version}");
 
                             telemetry.TelemetryEvent = new PackageExtractionTelemetryEvent(
-                                       extractionId,
                                        packageExtractionContext.PackageSaveMode,
                                        NuGetOperationStatus.Succeeded,
                                        ExtractionSource.DownloadResource,
@@ -588,7 +580,6 @@ namespace NuGet.Packaging
                                                 + $"{packageIdentity.Id} {packageIdentity.Version}");
 
                             telemetry.TelemetryEvent = new PackageExtractionTelemetryEvent(
-                                       extractionId,
                                        packageExtractionContext.PackageSaveMode,
                                        NuGetOperationStatus.NoOp,
                                        ExtractionSource.DownloadResource,
@@ -619,9 +610,8 @@ namespace NuGet.Packaging
             }
 
             var logger = packageExtractionContext.Logger;
-            var operationId = Guid.NewGuid();
 
-            using (var telemetry = new TelemetryActivity(parentId))
+            using (var telemetry = TelemetryActivity.CreateTelemetryActivityWithNewOperationId(parentId))
             {
                 var targetPath = versionFolderPathResolver.GetInstallPath(packageIdentity.Id, packageIdentity.Version);
                 var targetNuspec = versionFolderPathResolver.GetManifestFilePath(packageIdentity.Id, packageIdentity.Version);
@@ -724,7 +714,6 @@ namespace NuGet.Packaging
                                     }
 
                                     telemetry.TelemetryEvent = new PackageExtractionTelemetryEvent(
-                                        operationId,
                                         packageExtractionContext.PackageSaveMode,
                                         NuGetOperationStatus.Failed,
                                         ExtractionSource.RestoreCommand,
@@ -829,7 +818,6 @@ namespace NuGet.Packaging
                             logger.LogVerbose($"Completed installation of {packageIdentity.Id} {packageIdentity.Version}");
 
                             telemetry.TelemetryEvent = new PackageExtractionTelemetryEvent(
-                                operationId,
                                 packageExtractionContext.PackageSaveMode,
                                 NuGetOperationStatus.Succeeded,
                                 ExtractionSource.RestoreCommand,
@@ -842,7 +830,6 @@ namespace NuGet.Packaging
                                                 + $"{packageIdentity.Id} {packageIdentity.Version}");
 
                             telemetry.TelemetryEvent = new PackageExtractionTelemetryEvent(
-                                operationId,
                                 packageExtractionContext.PackageSaveMode,
                                 NuGetOperationStatus.NoOp,
                                 ExtractionSource.RestoreCommand,

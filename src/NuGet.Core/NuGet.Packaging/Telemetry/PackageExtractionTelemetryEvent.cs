@@ -10,8 +10,6 @@ namespace NuGet.Packaging
 {
     public class PackageExtractionTelemetryEvent : TelemetryEvent
     {
-        public string OperationId => (string)base[nameof(OperationId)];
-
         public const string EventName = "PackageExtractionInformation";
 
         public PackageSaveMode PackageSaveMode => (PackageSaveMode)base[nameof(PackageSaveMode)];
@@ -23,7 +21,6 @@ namespace NuGet.Packaging
         public string PackageId => (string)base[nameof(PackageId)];
 
         public PackageExtractionTelemetryEvent(
-            Guid OperationId,
             PackageSaveMode packageSaveMode,
             NuGetOperationStatus status,
             ExtractionSource extractionSource,
@@ -32,7 +29,6 @@ namespace NuGet.Packaging
                 {
                     { nameof(Status), status },
                     { nameof(ExtractionSource), extractionSource },
-                    { nameof(OperationId), OperationId.ToString() },
                     { nameof(PackageSaveMode), packageSaveMode },
                     { nameof(PackageId), CryptoHashUtility.GenerateUniqueToken(packageId.ToString())}
                 })

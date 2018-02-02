@@ -456,8 +456,7 @@ namespace NuGet.Commands.FuncTest
                             XmlDocFileSaveMode.None,
                             logger,
                             signedPackageVerifier: null),
-                        CancellationToken.None,
-                        new KeyValuePair<string, Guid>());
+                        CancellationToken.None);
                 }
 
                 Exception ex = null;
