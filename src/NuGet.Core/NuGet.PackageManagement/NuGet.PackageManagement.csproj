@@ -2,7 +2,8 @@
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), 'README.md'))\build\common.props" />
 
   <PropertyGroup>
-    <NetStandardPackageVersion>2.0.0</NetStandardPackageVersion>
+    <NetStandardPackageVersion>2.0.1</NetStandardPackageVersion>
+    <NetStandardImplicitPackageVersion Condition=" '$(TargetFramework)' == 'netstandard2.0' ">$(NetStandardPackageVersion)</NetStandardImplicitPackageVersion>
     <Description>NuGet Package Management</Description>
     <TargetFrameworks>net46;netstandard2.0</TargetFrameworks>
     <NoWarn>$(NoWarn);CS1591;CS1580;CS1574;CS1573</NoWarn>
