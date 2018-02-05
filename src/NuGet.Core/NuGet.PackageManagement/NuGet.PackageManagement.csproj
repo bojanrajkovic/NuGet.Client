@@ -3,7 +3,7 @@
 
   <PropertyGroup>
     <Description>NuGet Package Management</Description>
-    <TargetFramework>net46</TargetFramework>
+    <TargetFrameworks>net46;netstandard2.0</TargetFrameworks>
     <NoWarn>$(NoWarn);CS1591;CS1580;CS1574;CS1573</NoWarn>
     <PackProject>true</PackProject>
     <Shipping>true</Shipping>
@@ -15,8 +15,24 @@
     <ProjectReference Include="..\NuGet.Resolver\NuGet.Resolver.csproj" />
   </ItemGroup>
   
-  <ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net46'">
     <PackageReference Include="Microsoft.Web.Xdt" Version="2.1.1" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
+    <PackageReference Include="System.Runtime" Version="4.3.0" />
+    <PackageReference Include="System.Runtime.Serialization.Formatters" Version="4.3.0" />
+    <PackageReference Include="System.IO.Compression" Version="4.3.0" />
+    <PackageReference Include="System.IO.FileSystem" Version="4.3.0" />
+    <PackageReference Include="System.Xml.XmlDocument" Version="4.3.0" />
+    <PackageReference Include="System.Xml.ReaderWriter" Version="4.3.0" />
+    <PackageReference Include="System.Xml.XDocument" Version="4.3.0" />
+    <PackageReference Include="System.Text.Encoding" Version="4.3.0" />
+    <PackageReference Include="System.Text.Encoding.Extensions" Version="4.3.0" />
+    <PackageReference Include="System.Net.Http" Version="4.3.0" />
+    <PackageReference Include="System.Collections.Concurrent" Version="4.3.0" />
+    <PackageReference Include="System.Diagnostics.Tools" Version="4.3.0" />
+    <PackageReference Include="System.ComponentModel.Composition" Version="4.5.0-preview2-26202-05" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net46' ">
@@ -27,6 +43,9 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
+  </ItemGroup>
+
   <ItemGroup>
     <Compile Update="Strings.Designer.cs">
       <DesignTime>True</DesignTime>
